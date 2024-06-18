@@ -1,13 +1,13 @@
+# Importing needed classes
 from Environment import *
-
 from simulation import *
 
+
 def main():
-    # Create a new environment, add obstacles and goal.
-    envFrame = Env(40, 30)
+    TargetPath = path(50)
 
     while(True):
-        simulation(envFrame)
+        simulation(TargetPath)
 
 
 if __name__ == "__main__":
