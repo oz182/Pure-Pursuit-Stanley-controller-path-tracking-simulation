@@ -1,12 +1,14 @@
-# This flie contains the needed objects for:
-# 1) Creating an global environment
+import numpy as np
+import math
 
-class Env:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
+# This path object automaticlly creates the path when called
 class path:
-    def __init__(self, StartPos, GoalPos):
-        self.StartPos = StartPos
-        self.GoalPos = GoalPos
+    def __init__(self, PathLength):
+
+        self.PathLength = PathLength
+
+        # Create an array of "x axis" dots
+        self.cx = np.arange(0, PathLength, 0.5) # (start, length, space)
+
+        # attach the function to the x axis from above. The function shape is the path
+        self.cy = [math.sin(x_index / 5.0) * x_index / 2.0 for x_index in self.cx]
