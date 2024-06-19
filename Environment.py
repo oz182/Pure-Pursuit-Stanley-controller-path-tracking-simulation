@@ -13,3 +13,6 @@ class path:
 
         # attach the function to the x axis from above. The function shape is the path
         self.cy = [math.sin(x_index / 5.0) * x_index / 2.0 for x_index in self.cx]
+
+        # Create a list of tupels for every cx and cy pair
+        PathPositionsList = list(zip(self.cx, self.cy))
