@@ -2,6 +2,7 @@ import numpy as np
 import math
 
 # This path object automaticlly creates the path when called
+# The path coordinates will be in a global referance frame
 class path:
     def __init__(self, PathLength):
 
