@@ -12,9 +12,9 @@ def main():
 
     while(True):
         simulation(TargetPath, Vehicle)
-        #SteeringCommand = TrackingAlgo.calculate_lookahead_point(TargetPath,Vehicle)
-        #Vehicle.set_steering_angle(SteeringCommand)
-        Vehicle.set_steering_angle(3.14)
+        SteeringCommand = TrackingAlgo.calculate_lookahead_point(TargetPath,Vehicle)
+        Vehicle.set_steering_angle(SteeringCommand)
+        #Vehicle.set_steering_angle(3.14)
         Vehicle.update(delta_t=0.2)
 
 

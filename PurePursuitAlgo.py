@@ -6,7 +6,7 @@ class PurePursuitAlgo:
 
     def find_closest_point(self, path, vehicle):
         # Find the closest point on the path to the current position
-        distances = [np.hypot(vehicle.pos[0] - p[0], vehicle.pos[1] - p[1]) for p in path]
+        distances = [np.hypot(vehicle.pos[0] - p[0], vehicle.pos[1] - p[1]) for p in path.PathPositionsList]
         min_distance_index = np.argmin(distances)
         return path[min_distance_index]
     
@@ -19,8 +19,8 @@ class PurePursuitAlgo:
 
     def calculate_lookahead_point(self, path, vehicle):
         # Assuming path is a list of tuples (X, Y) in global coordinates
-        closest_point = self.find_closest_point(path, vehicle.pos)
-        lookahead_point = self.find_lookahead_point(path, closest_point, vehicle.pos)
+        closest_point = self.find_closest_point(path, vehicle)
+        lookahead_point = self.find_lookahead_point(path, closest_point, vehicle)
         return lookahead_point
     
 
