@@ -15,4 +15,4 @@ class path:
         self.cy = [math.sin(x_index / 8.0) * x_index / 5.0 for x_index in self.cx]
 
         # Create a list of tupels for every cx and cy pair
-        PathPositionsList = list(zip(self.cx, self.cy))
+        self.PathPositionsList = list(zip(self.cx, self.cy))

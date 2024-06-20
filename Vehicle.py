@@ -18,7 +18,7 @@ class vehicle:
         self.delta = 0  # Steering angle
         
         self.L = l_f + l_r  # Wheelbase
-        self.pos = [self.x, self.y]
+        self.pos = (self.x, self.y)
         self.traj_x = []
         self.traj_y = []
     
