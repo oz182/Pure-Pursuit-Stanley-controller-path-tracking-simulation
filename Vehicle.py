@@ -17,7 +17,7 @@ class vehicle:
         self.v = v0  # Speed
         self.delta = 0  # Steering angle
         
-        self.L = l_f + l_r  # Wheelbase
+        self.WB = l_f + l_r  # Wheelbase
         self.pos = (self.x, self.y)
         self.traj_x = []
         self.traj_y = []
@@ -26,11 +26,11 @@ class vehicle:
         # Update the vehicle's state based on the kinematic bicycle model.
         self.x += self.v * np.cos(self.psi) * delta_t
         self.y += self.v * np.sin(self.psi) * delta_t
-        self.psi += (self.v / self.L) * np.tan(self.delta) * delta_t
+        self.psi += (self.v / self.WB) * np.tan(self.delta) * delta_t
 
-        self.pos = [self.x, self.y]
-        self.traj_x.append(self.pos[0])
-        self.traj_y.append(self.pos[1])
+        self.pos = (self.x, self.y)
+        self.traj_x.append(self.x)
+        self.traj_y.append(self.y)
 
     def set_steering_angle(self, delta):
         # Set the steering angle (in radians).
