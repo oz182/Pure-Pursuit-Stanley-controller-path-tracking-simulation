@@ -44,8 +44,8 @@ class vehicle:
         # Transform global coordinates to ego coordinates.
         dx = X_global - self.x
         dy = Y_global - self.y
-        x_ego = np.cos(self.psi) * dx + np.sin(self.psi) * dy
-        y_ego = -np.sin(self.psi) * dx + np.cos(self.psi) * dy
+        x_ego = np.cos(-self.psi) * dx - np.sin(-self.psi) * dy
+        y_ego = np.sin(-self.psi) * dx + np.cos(-self.psi) * dy
         return x_ego, y_ego
 
     def ego_to_global(self, x_ego, y_ego):

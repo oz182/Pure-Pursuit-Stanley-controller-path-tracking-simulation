@@ -6,15 +6,14 @@ from PurePursuitAlgo import *
 
 
 def main():
-    TargetPath = path(PathLength=100)
+    TargetPath = path(PathLength=50)
     Vehicle = vehicle(x0=0.1,y0=0.1,psi0=0.0,v0=1.0)
-    TrackingAlgo = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=1.5)
+    TrackingAlgo = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=2.0)
 
     while(True):
         simulation(TargetPath, Vehicle)
         SteeringCommand = TrackingAlgo.calculate_steering_angle()
         Vehicle.set_steering_angle(SteeringCommand)
-        print(SteeringCommand)
         Vehicle.update(delta_t=0.2)
 
 
