@@ -1,4 +1,4 @@
-# Importing needed classes
+# Importing needed classes and librarys
 from Environment import *
 from simulation import *
 from Vehicle import *
@@ -16,14 +16,15 @@ def arrived_to_target(path, vehicle, ArrivingThreshold):
     
     pass
 
-
 def main():
+    # Define the needed object
     TargetPath = path(PathLength=50)
     Vehicle = vehicle(x0=0.1,y0=0.1,psi0=0.0,v0=1.0)
-    TrackingAlgo = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=2.0)
+    TrackingAlgo = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=4.0)
 
     SimTime = 0 # Initialzing simulation time. The thresahold will be in seconds
 
+    # Two conditions for the simulation to run: (not arriving the target) or (time limit)
     while(not arrived_to_target(TargetPath, Vehicle, ArrivingThreshold=0.4) or SimTime >= 300):
         simulation(TargetPath, Vehicle)
         SteeringCommand = TrackingAlgo.calculate_steering_angle()
