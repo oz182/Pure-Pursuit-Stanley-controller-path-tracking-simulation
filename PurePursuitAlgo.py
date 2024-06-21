@@ -46,7 +46,6 @@ class PurePursuitAlgo:
         if turn_radius == float('inf'):
             return 0  # Straight line
         steering_angle = (np.arctan(self.vehicle.WB / turn_radius))
-        print(steering_angle * 180 / math.pi)
         return steering_angle
 
     

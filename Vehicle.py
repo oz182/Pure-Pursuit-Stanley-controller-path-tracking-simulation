@@ -3,15 +3,15 @@ import numpy as np
 WheelBase = 2.999 # [m] WheelBase of zeekr 001 
 
 class vehicle:
-    def __init__(self, x0, y0, psi0, v0):
+    def __init__(self, x0, y0, psi, v):
         self.x = x0  # Position x
         self.y = y0  # Position y
-        self.psi = psi0  # Heading angle
-        self.v = v0  # Speed
+        self.psi = psi  # Heading angle
+        self.v = v  # Speed
         self.delta = 0  # Steering angle
         
         self.WB = WheelBase
-        self.SteerAngleLim = 0.546 # [rad] tan(WheelBase / MaxTurningRadius) about 31.3 deg
+        self.SteerAngleLim = 0.785 # [rad] asked in the assignment 45 deg steer angle limit
 
         self.pos = (self.x, self.y)
         self.traj_x = []
