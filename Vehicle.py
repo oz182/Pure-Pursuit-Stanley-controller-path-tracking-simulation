@@ -3,11 +3,8 @@ import numpy as np
 # Zeekr 001 dynamic parameters, according to an online search by chatGPT:
 
 WheelBase = 2.999 # [m]
-Mass = 2345 # [kg]
 l_f = 1.5 # [m]
 l_r = 1.5 # [m]
-C_f = 190000 # [N/rad]
-C_r = 190000 # [N/rad]
 
 class vehicle:
     def __init__(self, x0, y0, psi0, v0):
