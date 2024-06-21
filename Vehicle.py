@@ -1,10 +1,6 @@
 import numpy as np
 
-# Zeekr 001 dynamic parameters, according to an online search by chatGPT:
-
-WheelBase = 2.999 # [m]
-l_f = 1.5 # [m]
-l_r = 1.5 # [m]
+WheelBase = 2.999 # [m] WheelBase of zeekr 001 
 
 class vehicle:
     def __init__(self, x0, y0, psi0, v0):
@@ -14,7 +10,9 @@ class vehicle:
         self.v = v0  # Speed
         self.delta = 0  # Steering angle
         
-        self.WB = l_f + l_r  # Wheelbase
+        self.WB = WheelBase
+        self.SteerAngleLim = 0.546 # [rad] tan(WheelBase / MaxTurningRadius) about 31.3 deg
+
         self.pos = (self.x, self.y)
         self.traj_x = []
         self.traj_y = []
@@ -30,8 +28,14 @@ class vehicle:
         self.traj_y.append(self.y)
 
     def set_steering_angle(self, delta):
-        # Set the steering angle (in radians).
-        self.delta = delta
+        # Set the steering angle (in radians). The steering angle goes  
+        if delta < -self.SteerAngleLim:
+            self.delta = -self.SteerAngleLim
+        elif delta > self.SteerAngleLim:
+            self.delta = self.SteerAngleLim
+        else:
+            self.delta = delta
+            
 
     def set_speed(self, speed):
         # Set the vehicle speed.
