@@ -16,3 +16,6 @@ class path:
 
         # Create a list of tupels for every cx and cy pair
         self.PathPositionsList = list(zip(self.cx, self.cy))
+
+    def global_to_path_coordinates():
+        pass

@@ -1,5 +1,5 @@
 # Importing needed classes and librarys
-from Environment import *
+from Path import *
 from simulation import *
 from Vehicle import *
 from PurePursuitAlgo import *
@@ -35,7 +35,7 @@ def main():
 
     #Vehicle = vehicle(x0=0.1,y0=0.1,psi0=0.0,v0=1.0)
     Vehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v)
-    
+
     PurePursuitTracking = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=4.0)
     StanleyTracking = StanleyController(TargetPath, Vehicle)
 
