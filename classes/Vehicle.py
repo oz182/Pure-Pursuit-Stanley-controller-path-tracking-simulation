@@ -58,7 +58,7 @@ class vehicle:
 
     
 class ServoDynamics:
-    # This class expresses the control dynamics of the steering angle actuator.
+    # This class expresses the control dynamics of the steering angle actuator as 2nd order closed-loop system.
     # I've set the dt to 0.4. smaller than that and the servo is not fast enogh to overcome the curve
         def __init__(self, delta_max=45.0, rate_limit=20.0, time_delay=0.2, omega_delta=1.0, zeta_delta=0.7, dt=0.4):
             self.delta_max = np.radians(delta_max)  # Convert to radians
