@@ -4,14 +4,14 @@ Vehicle Dynamic simulation - Entry Programming Assignment
 This assignment is a simualtion of path tracking vehicle (bicycle kinematic model) using two kind of algorithms: Pure Pursuit and stanley controller.
 
 To run the simulation, open command line from the project's dicrectory path and run the following command:
-'''terminal
+```terminal
 python3 main.py -x0 0 -y0 0 -psi 0 -v 1.0
- '''
+ ```
  You can set differnt initial values for the vehicle.
  It is recommended to install the requirments.txt file before running for making sure you don't miss any needed module. Install the requirments.tx file, by running the following command (command line), from the assignment folder path:
- '''terminal
+ ```terminal
   pip install -r requirements.txt
- '''
+ ```
 
 Explanation of classes in this assignment:
 
