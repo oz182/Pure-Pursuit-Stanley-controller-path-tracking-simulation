@@ -17,6 +17,7 @@ class vehicle:
         self.pos = (self.x, self.y)
         self.traj_x = []
         self.traj_y = []
+        self.traj_psi = []
 
         self.SteeringServo = ServoDynamics()
     
@@ -29,6 +30,7 @@ class vehicle:
         self.pos = (self.x, self.y)
         self.traj_x.append(self.x)
         self.traj_y.append(self.y)
+        self.traj_psi.append(self.psi)
 
     def set_steering_angle(self, delta):
         # Set the steering angle using the servo dynamics classs
