@@ -11,7 +11,7 @@ def simulation(path, vehicle):
     plt.legend()
     plt.grid()
 
-    plt.pause(0.001)
+    plt.pause(0.01)
 
 def show_results(path, vehicle):
 
