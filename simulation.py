@@ -6,6 +6,8 @@ fig1, ax1 = plt.subplots(figsize=(10,7))
 
 
 def simulation(path, vehicle):
+    # Main simulation function, runs inside the main 'while' loop
+    # plotting the real time global position of the vehicle and path
     ax1.clear()
 
     ax1.plot(path.cx, path.cy, linewidth=2, label='Path')
@@ -22,8 +24,9 @@ def simulation(path, vehicle):
 
 
 def show_results(path, vehicle):
+    # This function plots a graph of the vehicle state (only heading) in relaion to time
 
-    fig1.show()
+    fig1.show() # Making the last frame of the simulation remains on the screen
 
     fig2, ax2 = plt.subplots()
 
