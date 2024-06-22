@@ -3,6 +3,7 @@ from Environment import *
 from simulation import *
 from Vehicle import *
 from PurePursuitAlgo import *
+from StanleyController import *
 
 import numpy as np
 import argparse # This module used for running the file from command line with arguments
@@ -29,10 +30,14 @@ def main():
     args = parser.parse_args()
     
     # Define the needed objects
+
     TargetPath = path(PathLength=50)
+
     #Vehicle = vehicle(x0=0.1,y0=0.1,psi0=0.0,v0=1.0)
     Vehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v)
-    TrackingAlgo = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=4.0)
+    
+    PurePursuitTracking = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=4.0)
+    StanleyTracking = StanleyController(TargetPath, Vehicle)
 
     SimTime = 0 # Initialzing simulation time. The thresahold will be in seconds
 
@@ -40,7 +45,11 @@ def main():
     while(not arrived_to_target(TargetPath, Vehicle, ArrivingThreshold=0.4) and SimTime < 300):
         simulation(TargetPath, Vehicle)
 
-        SteeringCommand = TrackingAlgo.calculate_steering_angle()
+        # Below you can choose between two control startgies (Pure pursuit or Stanley control)
+
+        #SteeringCommand = PurePursuitTracking.calculate_steering_angle()
+        SteeringCommand = StanleyTracking.calculate_steering_angle()
+
         Vehicle.set_steering_angle(SteeringCommand)
         Vehicle.update(delta_t=0.1)
 
