@@ -8,6 +8,7 @@ class StanleyController:
         self.vehicle = vehicle
 
     def find_closest_point(self):
+        # Find the closest point on the path to the current position
         distances = [np.hypot(self.vehicle.pos[0] - p[0], self.vehicle.pos[1] - p[1]) for p in self.path.PathPositionsList]
         min_distance_index = np.argmin(distances)
         return min_distance_index, self.path.PathPositionsList[min_distance_index]
