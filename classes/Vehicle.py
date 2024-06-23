@@ -4,7 +4,7 @@ WheelBase = 2.999 # [m] WheelBase of zeekr 001
 
 class vehicle:
     # This class describe the vehicle and its properties.
-    def __init__(self, x0, y0, psi, v):
+    def __init__(self, x0, y0, psi, v, BiasServoAngle):
         self.x = x0  # Position x
         self.y = y0  # Position y
         self.psi = psi  # Heading angle
@@ -19,7 +19,9 @@ class vehicle:
         self.traj_y = []
         self.traj_psi = []
 
-        self.SteeringServo = ServoDynamics()
+        self.BiasServoAngle = BiasServoAngle # [rad] bias steering angle for the servo
+        self.SteeringServo = ServoDynamics(self.delta, self.BiasServoAngle)
+
     
     def update(self, delta_t):
         # Update the vehicle's state based on the kinematic bicycle model.
@@ -33,8 +35,8 @@ class vehicle:
         self.traj_psi.append(self.psi)
 
     def set_steering_angle(self, delta):
-        # Set the steering angle using the servo dynamics classs
-        self.delta = self.SteeringServo.get_actual_steering_angle(delta_command=delta)
+        # Set the steering angle using the servo dynamics class
+        self.delta = self.SteeringServo.get_actual_steering_angle(delta)
         return self.delta
 
     def set_speed(self, speed):
@@ -60,7 +62,7 @@ class vehicle:
 class ServoDynamics:
     # This class expresses the control dynamics of the steering angle actuator as 2nd order closed-loop system.
     # I've set the dt to 0.4. smaller than that and the servo is not fast enogh to overcome the curve
-        def __init__(self, delta_max=45.0, rate_limit=20.0, time_delay=0.2, omega_delta=1.0, zeta_delta=0.7, dt=0.4):
+        def __init__(self, actual_delta, angle_bias, delta_max=45.0, rate_limit=20.0, time_delay=0.2, omega_delta=1.0, zeta_delta=0.7, dt=0.4):
             self.delta_max = np.radians(delta_max)  # Convert to radians
             self.rate_limit = np.radians(rate_limit)  # Convert to radians per second
             self.time_delay = time_delay
@@ -69,21 +71,26 @@ class ServoDynamics:
             self.dt = dt
 
             # Initialize states for the second-order system
-            self.delta = 0
+            self.delta = actual_delta
             self.delta_dot = 0
+            self.angle_bias = angle_bias
 
             # Initialize buffer for time delay
             self.delay_buffer = [0] * int(time_delay / dt)
 
         def second_order_system(self, delta_command):
-            # Discrete second-order system approximation
-            delta_ddot = self.omega_delta**2 * (delta_command - self.delta) - 2 * self.zeta_delta * self.omega_delta * self.delta_dot
+            # Steering angle error (command - actual)
+            delta_error = delta_command - (self.delta + self.angle_bias) 
+
+            # Closed-loop second-order servo model
+            delta_ddot = self.omega_delta**2 * (delta_error) - 2 * self.zeta_delta * self.omega_delta * self.delta_dot
             self.delta_dot += delta_ddot * self.dt
             self.delta += self.delta_dot * self.dt
 
             return self.delta
 
         def rate_limiter(self, delta_command, delta_prev):
+            # Limit the rate of angle change - servo limitation
             max_change = self.rate_limit * self.dt
             change = delta_command - delta_prev
             if abs(change) > max_change:

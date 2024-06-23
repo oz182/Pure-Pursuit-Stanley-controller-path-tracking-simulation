@@ -31,8 +31,11 @@ def main():
     # Define the needed objects
     TargetPath = path(PathLength=50)
 
-    Vehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v)
+    # Define vehicles
+    Vehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0)
+    BiasVehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0.018)
 
+    #Creating the algorithms objects
     PurePursuitTracking = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=4.0)
     StanleyTracking = StanleyController(TargetPath, Vehicle)
 
@@ -41,18 +44,23 @@ def main():
 
     # Two conditions for the simulation to run: (not arriving the target) or (time limit)
     while(not arrived_to_target(TargetPath, Vehicle, ArrivingThreshold=0.4) and SimTime < 300):
-        simulation(TargetPath, Vehicle)
+        simulation(TargetPath, Vehicle, BiasVehicle)
 
         # Below you can choose between two control startgies (Pure pursuit or Stanley control)
-        SteeringCommand = PurePursuitTracking.calculate_steering_angle()   # Pure Pursuit
-        #SteeringCommand = StanleyTracking.calculate_steering_angle()      # Stanley controller
+        SteeringCommand_Pursuit = PurePursuitTracking.calculate_steering_angle()   # Pure Pursuit
+        SteeringCommand_Stanley = StanleyTracking.calculate_steering_angle()      # Stanley controller
 
-        Vehicle.set_steering_angle(SteeringCommand)
+        # Start moving one Vehicle. 
+        Vehicle.set_steering_angle(SteeringCommand_Pursuit)
         Vehicle.update(delta_t=0.1)
+
+        # Start moving the second vehicle.
+        BiasVehicle.set_steering_angle(SteeringCommand_Pursuit) # Adding 5 deg bias of steering angle
+        #BiasVehicle.update(delta_t=0.1) # Uncomment this line to plot only one vehicle
 
         SimTime += 0.1 # Just for time measurment
 
-    show_results(TargetPath, Vehicle)
+    show_results(TargetPath, Vehicle, BiasVehicle)
 
 
 if __name__ == "__main__":
