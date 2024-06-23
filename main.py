@@ -50,15 +50,17 @@ def main():
         SteeringCommand_Pursuit = PurePursuitTracking.calculate_steering_angle()   # Pure Pursuit
         SteeringCommand_Stanley = StanleyTracking.calculate_steering_angle()      # Stanley controller
 
+        # Start moving one Vehicle. 
         Vehicle.set_steering_angle(SteeringCommand_Pursuit)
         Vehicle.update(delta_t=0.1)
 
+        # Start moving the second vehicle.
         BiasVehicle.set_steering_angle(SteeringCommand_Pursuit) # Adding 5 deg bias of steering angle
-        BiasVehicle.update(delta_t=0.1)
+        #BiasVehicle.update(delta_t=0.1) # Comment out this line to plot only one vehicle
 
         SimTime += 0.1 # Just for time measurment
 
-    show_results(TargetPath, Vehicle)
+    show_results(TargetPath, Vehicle, BiasVehicle)
 
 
 if __name__ == "__main__":
