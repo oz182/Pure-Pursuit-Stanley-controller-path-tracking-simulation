@@ -4,7 +4,7 @@ WheelBase = 2.999 # [m] WheelBase of zeekr 001
 
 class vehicle:
     # This class describe the vehicle and its properties.
-    def __init__(self, x0, y0, psi, v):
+    def __init__(self, x0, y0, psi, v, BiasServoAngle):
         self.x = x0  # Position x
         self.y = y0  # Position y
         self.psi = psi  # Heading angle
@@ -20,6 +20,7 @@ class vehicle:
         self.traj_psi = []
 
         self.SteeringServo = ServoDynamics()
+        self.BiasServoAngle = BiasServoAngle # [rad] bias steering angle for the servo
     
     def update(self, delta_t):
         # Update the vehicle's state based on the kinematic bicycle model.
@@ -33,8 +34,8 @@ class vehicle:
         self.traj_psi.append(self.psi)
 
     def set_steering_angle(self, delta):
-        # Set the steering angle using the servo dynamics classs
-        self.delta = self.SteeringServo.get_actual_steering_angle(delta_command=delta)
+        # Set the steering angle using the servo dynamics class
+        self.delta = self.SteeringServo.get_actual_steering_angle(delta, self.BiasServoAngle)
         return self.delta
 
     def set_speed(self, speed):
@@ -75,9 +76,9 @@ class ServoDynamics:
             # Initialize buffer for time delay
             self.delay_buffer = [0] * int(time_delay / dt)
 
-        def second_order_system(self, delta_command):
+        def second_order_system(self, delta_command, bias):
             # Discrete second-order system approximation
-            delta_ddot = self.omega_delta**2 * (delta_command - self.delta) - 2 * self.zeta_delta * self.omega_delta * self.delta_dot
+            delta_ddot = self.omega_delta**2 * (delta_command - (self.delta + bias)) - 2 * self.zeta_delta * self.omega_delta * self.delta_dot
             self.delta_dot += delta_ddot * self.dt
             self.delta += self.delta_dot * self.dt
 
@@ -90,7 +91,7 @@ class ServoDynamics:
                 delta_command = delta_prev + np.sign(change) * max_change
             return delta_command
 
-        def get_actual_steering_angle(self, delta_command):
+        def get_actual_steering_angle(self, delta_command, BiasAngle):
             # Apply time delay
             self.delay_buffer.append(delta_command)
             delayed_command = self.delay_buffer.pop(0)
@@ -99,7 +100,7 @@ class ServoDynamics:
             limited_command = self.rate_limiter(delayed_command, self.delta)
 
             # Update the second-order system
-            actual_delta = self.second_order_system(limited_command)
+            actual_delta = self.second_order_system(limited_command, BiasAngle)
 
             # Limit the road wheel angle
             actual_delta = np.clip(actual_delta, -self.delta_max, self.delta_max)
