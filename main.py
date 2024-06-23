@@ -56,7 +56,7 @@ def main():
 
         # Start moving the second vehicle.
         BiasVehicle.set_steering_angle(SteeringCommand_Pursuit) # Adding 5 deg bias of steering angle
-        #BiasVehicle.update(delta_t=0.1) # Comment out this line to plot only one vehicle
+        #BiasVehicle.update(delta_t=0.1) # Uncomment this line to plot only one vehicle
 
         SimTime += 0.1 # Just for time measurment
 

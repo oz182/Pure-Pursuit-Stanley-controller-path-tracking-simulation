@@ -36,7 +36,7 @@ class vehicle:
 
     def set_steering_angle(self, delta):
         # Set the steering angle using the servo dynamics class
-        self.delta = self.SteeringServo.get_actual_steering_angle(delta, self.BiasServoAngle)
+        self.delta = self.SteeringServo.get_actual_steering_angle(delta)
         return self.delta
 
     def set_speed(self, speed):
