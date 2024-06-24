@@ -28,10 +28,13 @@ def main():
     
     args = parser.parse_args()
     
-    # Define the needed objects
-    TargetPath = path(PathLength=50)
-
-    # Define vehicles
+    # Creating path object
+    TargetPath = path(PathLength=50) # Pre-made path based on sinus function
+    # In case you want to build the path based on a csv file:
+    """
+    TargetPath.load_path_csv('waypoints.csv') # Replace the name of the .csv file if needed
+    """
+    # Creating vehicles objects
     Vehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0)
     BiasVehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0.018)
 
@@ -56,8 +59,9 @@ def main():
 
         # Start moving the second vehicle.
         BiasVehicle.set_steering_angle(SteeringCommand_Pursuit) # Adding 5 deg bias of steering angle
-        #BiasVehicle.update(delta_t=0.1) # Uncomment this line to plot only one vehicle
-
+        """
+        #BiasVehicle.update(delta_t=0.1) # Uncomment this line to plot that vehicle
+        """
         SimTime += 0.1 # Just for time measurment
 
     show_results(TargetPath, Vehicle, BiasVehicle)
