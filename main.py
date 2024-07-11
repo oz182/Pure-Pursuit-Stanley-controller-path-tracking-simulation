@@ -36,11 +36,13 @@ def main():
     """
     # Creating vehicles objects
     Vehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0)
-    BiasVehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0.018)
+    BiasVehicle = vehicle(x0=args.x0, y0=args.y0, psi=args.psi, v=args.v, BiasServoAngle=0.087)
 
     #Creating the algorithms objects
     PurePursuitTracking = PurePursuitAlgo(TargetPath, Vehicle, lookahead_distance=4.0)
+    PurePursuitTracking_Bias = PurePursuitAlgo(TargetPath, BiasVehicle, lookahead_distance=4.0)
     StanleyTracking = StanleyController(TargetPath, Vehicle)
+    StanleyTracking_Bias = StanleyController(TargetPath, BiasVehicle)
 
     # Initialzing simulation time. The thresahold will be in seconds
     SimTime = 0
@@ -51,17 +53,18 @@ def main():
 
         # Below you can choose between two control startgies (Pure pursuit or Stanley control)
         SteeringCommand_Pursuit = PurePursuitTracking.calculate_steering_angle()   # Pure Pursuit
-        SteeringCommand_Stanley = StanleyTracking.calculate_steering_angle()      # Stanley controller
+        #SteeringCommand_Stanley = StanleyTracking.calculate_steering_angle()      # Stanley controller
+        SteeringCommand_Pursuit_Bias = PurePursuitTracking_Bias.calculate_steering_angle()   # Pure Pursuit for bias steering
+        #SteeringCommand_Stanley_Bias = StanleyTracking_Bias.calculate_steering_angle()      # Stanley controller bias steering
 
         # Start moving one Vehicle. 
         Vehicle.set_steering_angle(SteeringCommand_Pursuit)
         Vehicle.update(delta_t=0.1)
 
         # Start moving the second vehicle.
-        BiasVehicle.set_steering_angle(SteeringCommand_Pursuit) # Adding 5 deg bias of steering angle
-        """
-        #BiasVehicle.update(delta_t=0.1) # Uncomment this line to plot that vehicle
-        """
+        BiasVehicle.set_steering_angle(SteeringCommand_Pursuit_Bias) # Adding 5 deg bias of steering angle
+        BiasVehicle.update(delta_t=0.1) # Uncomment this line to plot that vehicle
+
         SimTime += 0.1 # Just for time measurment
 
     show_results(TargetPath, Vehicle, BiasVehicle)
