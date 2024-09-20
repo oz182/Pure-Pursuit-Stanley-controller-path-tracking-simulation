@@ -1,7 +1,6 @@
 # VehicleDynamicsSimulation_Assignment
-Vehicle Dynamic simulation - Entry Programming Assignment
 
-This assignment is a simualtion of path tracking vehicle (bicycle kinematic model) using two kind of algorithms: Pure Pursuit and stanley controller.
+This is a simualtion of path tracking vehicle (bicycle kinematic model) using two kind of algorithms: Pure Pursuit and stanley controller.
 
 To run the simulation, open command line from the project's dicrectory path and run the following command:
 ```terminal
