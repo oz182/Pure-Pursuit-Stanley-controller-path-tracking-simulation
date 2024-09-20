@@ -46,7 +46,7 @@ Other then that, the "Simulation.py" file, contains the needed code for illustar
 For convience, here are the outcome of running the project:
 
 ## Pure Pursuit path tracking and Vehicle's yaw angle vs time
-![Simulation of Pure Pursuit algorithm](images/PurePursuit_sim.png) ![Graph of vehicles yaw angle vs time](images/PurePursuit_yaw.png)
+![Simulation of Pure Pursuit algorithm](SimulationOptimazied.gif) ![Graph of vehicles yaw angle vs time](images/PurePursuit_yaw.png)
 
 ## Stanley controller path tracking and Vehicle's yaw angle vs time
 ![Simulation of Stanley controller algorithm](images/Stanley_sim.png) ![Graph of vehicles yaw angle vs time](images/Stanley_yaw.png)
