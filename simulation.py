@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import imageio
 
 fig1, ax1 = plt.subplots(figsize=(10,7))
+FigsList = []
 
-
-def simulation(path, vehicle1, vehicle2):
+def simulation(path, vehicle1, vehicle2, SimIter):
     # Main simulation function, runs inside the main 'while' loop
     # plotting the real time global position of the vehicle and path
     ax1.clear()
@@ -25,6 +26,16 @@ def simulation(path, vehicle1, vehicle2):
     ax1.grid()
 
     plt.pause(0.01)
+
+"""
+    # Saving each figure to create a gif later
+    SimIter = SimIter * 10 # Making this value (SimIter) to be the frame number
+    filename = f"Sim_frames/plot_{SimIter}.png"
+    plt.savefig(filename)
+    FigsList.append(filename)
+"""
+
+
 
 
 def show_results(path, vehicle1, vehicle2):
@@ -48,3 +59,11 @@ def show_results(path, vehicle1, vehicle2):
     fig2.show()
 
     plt.show()
+
+"""
+    # Create the GIF
+    with imageio.get_writer('Simulation.gif', mode='I', duration=0.1) as writer:
+        for filename in FigsList:
+            image = imageio.imread(filename)
+            writer.append_data(image)
+"""

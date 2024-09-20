@@ -49,7 +49,7 @@ def main():
 
     # Two conditions for the simulation to run: (not arriving the target) or (time limit)
     while(not arrived_to_target(TargetPath, Vehicle, ArrivingThreshold=0.4) and SimTime < 300):
-        simulation(TargetPath, Vehicle, BiasVehicle)
+        simulation(TargetPath, Vehicle, BiasVehicle, SimTime)
 
         # Below you can choose between two control startgies (Pure pursuit or Stanley control)
         SteeringCommand_Pursuit = PurePursuitTracking.calculate_steering_angle()   # Pure Pursuit
